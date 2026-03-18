@@ -12,15 +12,15 @@ Timetable Management microservice for the Smart Campus Services platform.
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/timetable` | JWT | Get student's timetable |
-| POST | `/timetable/generate` | JWT | Auto-generate from enrolled courses |
-| POST | `/timetable` | JWT | Add entry manually |
-| PUT | `/timetable/:id` | JWT | Update entry |
-| DELETE | `/timetable/:id` | JWT | Remove entry |
-| DELETE | `/timetable` | JWT | Clear entire timetable |
-| GET | `/health` | No | Health check |
+| Method | Endpoint              | Auth | Description                         |
+| ------ | --------------------- | ---- | ----------------------------------- |
+| GET    | `/timetable`          | JWT  | Get student's timetable             |
+| POST   | `/timetable/generate` | JWT  | Auto-generate from enrolled courses |
+| POST   | `/timetable`          | JWT  | Add entry manually                  |
+| PUT    | `/timetable/:id`      | JWT  | Update entry                        |
+| DELETE | `/timetable/:id`      | JWT  | Remove entry                        |
+| DELETE | `/timetable`          | JWT  | Clear entire timetable              |
+| GET    | `/health`             | No   | Health check                        |
 
 ## Inter-Service Communication
 
@@ -46,6 +46,21 @@ docker-compose up --build
 ```bash
 npm test
 ```
+
+## Production Deployment
+
+- **Deployed URL:** https://timetable-service-vzzm.onrender.com
+- **API Gateway URL:** [YOUR_API_GATEWAY_URL]
+
+> For all production API calls, use the API Gateway URL above. Direct service URLs are for internal use and debugging only.
+
+## CI/CD & Security
+
+- Automated build, test, and deploy via GitHub Actions
+- Static analysis: SonarCloud
+- Dependency scanning: Snyk
+
+---
 
 ## License
 

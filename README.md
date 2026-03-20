@@ -1,6 +1,6 @@
 # Timetable Service — Smart Campus Services
 
-Timetable Management microservice for the Smart Campus Services platform.
+Timetable Management microservice for the Smart Campus Services platform (CTSE Cloud Computing Assignment).
 
 ## Features
 
@@ -9,6 +9,32 @@ Timetable Management microservice for the Smart Campus Services platform.
 - **Time Conflict Detection** — Prevents overlapping schedules
 - **Group by Day** — Returns timetable organized by weekday
 - **Inter-Service Auth** — JWT validation via Auth Service
+- **Security** — Helmet, CORS, rate limiting, input validation (Joi)
+
+## Tech Stack
+
+- Node.js 18 + Express
+- MongoDB Atlas (Mongoose ODM)
+- Axios (for inter-service communication with Auth & Course Services)
+- Docker (multi-stage build, non-root user)
+- GitHub Actions CI/CD
+- SonarCloud + Snyk (DevSecOps)
+
+## Quick Start
+
+```bash
+npm install
+cp .env.example .env
+# Edit .env with MongoDB URI, JWT secret, Auth/Course Service URLs
+npm run dev     # http://localhost:3003
+```
+
+### Docker
+
+```bash
+docker build -t timetable-service .
+docker run -p 3003:3003 --env-file .env timetable-service
+```
 
 ## API Endpoints
 
@@ -22,45 +48,34 @@ Timetable Management microservice for the Smart Campus Services platform.
 | DELETE | `/timetable`          | JWT  | Clear entire timetable              |
 | GET    | `/health`             | No   | Health check                        |
 
+### API Documentation
+
+Once running: http://localhost:3003/api-docs
+
+## Production Deployment
+
+- **Cloud Provider:** Microsoft Azure
+- **Service:** Azure Container Apps (managed container orchestration)
+- **Registry:** Azure Container Registry (`campusservices.azurecr.io`)
+- **Live URL:** https://timetable-service.redisland-b57e0bf2.eastus.azurecontainerapps.io
+
+## CI/CD Pipeline
+
+1. **Lint & Test** — ESLint + Jest with coverage
+2. **Security Scan** — SonarCloud (SAST) + Snyk (dependency vulnerabilities)
+3. **Build & Push** — Docker build → push to Azure Container Registry
+4. **Deploy** — Update Azure Container App with new image
+
 ## Inter-Service Communication
 
 1. **Auth Service**: Validates JWT tokens via `GET /auth/validate`
 2. **Course Service**: Fetches enrolled courses via `GET /courses/my` for timetable generation
-
-## Quick Start
-
-```bash
-npm install
-cp .env.example .env
-npm run dev     # http://localhost:3003
-```
-
-## Docker
-
-```bash
-docker-compose up --build
-```
 
 ## Testing
 
 ```bash
 npm test
 ```
-
-## Production Deployment
-
-- **Deployed URL:** https://timetable-service-vzzm.onrender.com
-- **API Gateway URL:** https://api-gateway-5vao.onrender.com
-
-> For all production API calls, use the API Gateway URL above. Direct service URLs are for internal use and debugging only.
-
-## CI/CD & Security
-
-- Automated build, test, and deploy via GitHub Actions
-- Static analysis: SonarCloud
-- Dependency scanning: Snyk
-
----
 
 ## License
 
